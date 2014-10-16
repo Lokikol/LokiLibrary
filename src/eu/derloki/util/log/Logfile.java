@@ -25,7 +25,14 @@ public enum Logfile {
 	public void createLogfile(String fileName){
 		this.fileName = fileName;
 		this.path = Paths.get(this.fileName);
-		
+		Path parent = this.path.getParent();
+		if(parent!=null)
+			try {
+				Files.createDirectories(this.path.getParent());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		try {
 			writer = Files.newBufferedWriter(path, Charset.defaultCharset());
 		} catch (IOException e) {
