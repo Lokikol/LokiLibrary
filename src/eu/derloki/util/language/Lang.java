@@ -153,7 +153,7 @@ public enum Lang {
 	}
 	
 	
-	public String getSentence(String m){
+	/*public String getSentence(String m){
 		return getSentence(m,null,null,null);
 	}
 	
@@ -178,6 +178,6 @@ public enum Lang {
 		
 		ret = ret.substring(0, ret.length()-1);
 		return ret;
-	}
+	}*/
 	
 }
