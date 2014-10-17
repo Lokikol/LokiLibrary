@@ -44,7 +44,44 @@ public enum Logfile {
 		textOut("<body><font face='courier new'>");
 		writeTopic("Logfile",3);
 		
-		textOut("<a href='mailto:gianluca.zurolo@web.de?subject=Logfile'>");
+		try {
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			writer = Files.newBufferedWriter(path, Charset.defaultCharset(), StandardOpenOption.APPEND);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void createLogfile(String fileName, String email){
+		this.fileName = fileName;
+		this.path = Paths.get(this.fileName);
+		Path parent = this.path.getParent();
+		if(parent!=null)
+			try {
+				Files.createDirectories(this.path.getParent());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		try {
+			writer = Files.newBufferedWriter(path, Charset.defaultCharset());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		textOut("<html><head><title>Logfile</title></head>");
+		textOut("<body><font face='courier new'>");
+		writeTopic("Logfile",3);
+		
+		textOut("<a href='mailto:"+email+"?subject=Logfile'>");
 		textOut("Send E-Mail to me");
 		textOut("</a><br><br>");
 		try {
@@ -60,8 +97,6 @@ public enum Logfile {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 	}
 		
 	public void writeTopic(String topic, int size){
