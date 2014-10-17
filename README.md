@@ -14,7 +14,7 @@ Example for the main-Function, using the Library:
 
 		//Properties setup ------------------------------------
 		Properties config = PropertiesHelper
-				.getProperties("resources/config.properties"); //creates Configfile in "resources" Folder
+				.getProperties("resources/config.properties"); //reads Configfile from "resources" Folder
 		//-----------------------------------------------------
 
 		//Language Setup --------------------------------------
@@ -40,7 +40,7 @@ Example for the main-Function, using the Library:
 		Lang.INSTANCE.saveUndefinedStrings("src/i18n/strings_de_DE.properties"); //to the properties-files
 
 		config.setProperty("language", language); //sets selected language (can be done somewhere else)
-		PropertiesHelper.save("config", "Language setup"); //saves config file
+		PropertiesHelper.save("config", "Language setup"); //saves config file, if not exists, creates it
 
 		Logfile.INSTANCE.closeLogfile(); //closes Logfile
 	}
