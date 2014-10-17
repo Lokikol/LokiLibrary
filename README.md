@@ -46,5 +46,3 @@ Example for the main-Function, using the Library:
 	}
 	
 This way, the Logfile will be created in the "log" Folder, the Configfile will be created in the "resources" Folder, containing "en_US" for the selected language and two files for internationalization will be created in the sourcefolder "i18n" for german and english support.
-
-Test Fork
