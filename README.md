@@ -1,7 +1,7 @@
 LokiLibrary
 ===========
 
-My Java Library for Security, Internationalization and Logging
+My Java Library for Internationalization, Logging, Properties/Preferences and some other stuff
 
 
 Example for the main-Function, using the Library:
