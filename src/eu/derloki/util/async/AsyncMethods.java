@@ -1,6 +1,7 @@
 package eu.derloki.util.async;
 
 import java.util.concurrent.Callable;
+import java.util.function.BiConsumer;
 
 /**
  * Container class for callable and callbacks
@@ -12,14 +13,14 @@ public class AsyncMethods<T> {
 
 	//callable and callback variables
 	private Callable<T> callable;
-	private ICallback<T> callback;
+	private BiConsumer<Exception,T> callback;
 	
 	/**
 	 * create the Object with a callable and a callback
 	 * @param callable - Callable
-	 * @param callback - ICallback
+	 * @param callback - BiConsumer
 	 */
-	public AsyncMethods(Callable<T> callable, ICallback<T> callback){
+	public AsyncMethods(Callable<T> callable, BiConsumer<Exception,T> callback){
 		this.callable = callable;
 		this.callback = callback;
 	}
@@ -36,7 +37,7 @@ public class AsyncMethods<T> {
 	 * Get the callback
 	 * @return callback
 	 */
-	public ICallback<T> getCallback(){
+	public BiConsumer<Exception,T> getCallback(){
 		return callback;
 	}
 	
