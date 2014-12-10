@@ -3,6 +3,8 @@ package eu.derloki.util.async;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.function.BiConsumer;
 
 /**
  * AsyncHelper
@@ -20,11 +22,18 @@ public class AsyncHelper {
 	 * @param callable - async. calls
 	 * @param callback - callback after async
 	 */
-	public static <T> void execute(ExecutorService executor,Callable<T> callable, ICallback<T> callback){
+	public static <T> void execute(ExecutorService executor,Callable<T> callable, BiConsumer<Exception, T> callback){
 		//create AsyncMethods Object from callable and callback
 		AsyncMethods<T> methods = new AsyncMethods<T>(callable, callback);
 		//execute everything
 		execute(executor, methods);
+	}
+	
+	public static <T> void execute(ExecutorService executor,Callable<T> callable, BiConsumer<Exception, T> callback, int time, TimeUnit timeunit){
+		//create AsyncMethods Object from callable and callback
+		AsyncMethods<T> methods = new AsyncMethods<T>(callable, callback);
+		//execute everything
+		execute(executor, methods,time,timeunit);
 	}
 	
 	/**
@@ -44,14 +53,35 @@ public class AsyncHelper {
 			try{
 				//get the result of the async. Method
 				t = future.get();
+				methods.getCallback().accept(null,t);		
 			}catch(Exception ex){
-				ex.printStackTrace();
+				methods.getCallback().accept(ex,null);
 			}
 			
 			//execute the callback with the result as parameter
-			methods.getCallback().callback(t);			
-			
 		});
 	}
+	
+	public static <T> void execute(ExecutorService executor, AsyncMethods<T> methods, int time, TimeUnit timeunit){
+		//submit a runnable task using lambdas to the executor
+		executor.submit(()->{
+			//create a future object and execute the callable part of methods async.
+			Future<T> future = executor.submit(methods.getCallable());
+			
+			//create an instance of T
+			T t = null;
+			try{
+				//get the result of the async. Method
+				t = future.get(time,timeunit);
+				methods.getCallback().accept(null,t);		
+			}catch(Exception ex){
+				methods.getCallback().accept(ex,null);
+			}
+			
+			//execute the callback with the result as parameter
+		});
+	}
+	
+	
 	
 }
