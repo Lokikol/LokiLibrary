@@ -3,7 +3,6 @@ package eu.derloki.util.async;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 /**
  * AsyncHelper
@@ -55,24 +54,4 @@ public class AsyncHelper {
 		});
 	}
 	
-	public static <T> void execute(ExecutorService executor, AsyncMethods<T> methods, int time, TimeUnit timeunit){
-		//submit a runnable task using lambdas to the executor
-				executor.submit(()->{
-					//create a future object and execute the callable part of methods async.
-					Future<T> future = executor.submit(methods.getCallable());
-					
-					//create an instance of T
-					T t = null;
-					try{
-						//get the result of the async. Method
-						t = future.get(time,timeunit);
-					}catch(Exception ex){
-						ex.printStackTrace();
-					}
-					
-					//execute the callback with the result as parameter
-					methods.getCallback().callback(t);			
-					
-				});
-	}
 }
