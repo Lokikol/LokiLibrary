@@ -82,11 +82,6 @@ public class AsyncHelper {
 		});
 	}
 	
-	public static void execute(ExecutorService executor, Runnable r){
-		//submit a runnable task using lambdas to the executor
-		executor.submit(r);
-	}
-	
 	
 	
 }
